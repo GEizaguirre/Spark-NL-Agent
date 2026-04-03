@@ -8,4 +8,4 @@ AGENTS.md
 *__pycache__*/
 *.DS_Store
 
-.jar
+*.jar
