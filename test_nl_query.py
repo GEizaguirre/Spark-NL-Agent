@@ -26,6 +26,7 @@ from spark_nl import (
     run_nl_query, process_result, print_results
 )
 from utils import ensure_sqlite_jdbc_driver, pretty_print_result
+import argparse
 
 
 # Configuration
@@ -33,12 +34,13 @@ DB_NAME = "superhero"
 NL_QUERY = "What are the names of all superheroes who have the power of flight?"
 
 
-def main():
+def main(provider):
     print("=" * 60)
     print(" NATURAL LANGUAGE TO SPARKSQL TEST")
     print("=" * 60)
     print(f"\nDatabase: {DB_NAME}")
     print(f"Query: {NL_QUERY}")
+    print(f"LLM Provider: {provider}")
     print("=" * 60)
     
     # Setup
@@ -50,7 +52,7 @@ def main():
     load_tables(spark, DB_NAME)
     
     # Run query
-    llm = get_llm(provider=Provider.GOOGLE.value)
+    llm = get_llm(provider=provider)
     agent = get_spark_agent(get_spark_sql(), llm)
     run_nl_query(agent, NL_QUERY, llm)
     
@@ -81,4 +83,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser(description="Test NL to SparkSQL agent.")
+    parser.add_argument("--provider", type=str, default=Provider.GOOGLE.value, help="LLM provider (default: google)")
+    args = parser.parse_args()
+    provider = args.provider
+    main(provider)

@@ -39,6 +39,15 @@ def get_llm(
         if model is None:
             model = DEFAULT_MODELS[Provider.OPENAI]
         llm = ChatOpenAI(model=model, temperature=temperature)
+    elif provider == Provider.NVIDIA.value:
+        if model is None:
+            model = DEFAULT_MODELS[Provider.NVIDIA]
+        llm = ChatOpenAI(
+            model=model,
+            temperature=temperature,
+            base_url="https://integrate.api.nvidia.com/v1",
+            api_key=os.getenv("NVIDIA_API_KEY")
+        )
     return llm
 
 

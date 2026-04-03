@@ -11,6 +11,7 @@ class Provider(Enum):
     CLOUDFLARE = "cloudflare"
     CLAUDE = "claude"
     OPENAI = "openai"
+    NVIDIA = "nvidia"
 
 
 metrics = {
@@ -25,5 +26,6 @@ DEFAULT_MODELS = {
     Provider.GOOGLE: "gemini-2.5-flash",
     Provider.CLOUDFLARE: "@cf/meta/llama-4-scout-17b-16e-instruct",
     Provider.CLAUDE: "claude-opus-4-5",
-    Provider.OPENAI: "gpt-5.2"
+    Provider.OPENAI: "gpt-5.2",
+    Provider.NVIDIA: "moonshotai/kimi-k2.5"
 }
